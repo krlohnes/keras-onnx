@@ -2,7 +2,7 @@
 
 import re
 import tensorflow as tf
-from onnxconverter_common import Int32TensorType, Int64TensorType, FloatTensorType, DoubleTensorType, BooleanTensorType
+from onnxconverter_common import Int32TensorType, Int64TensorType, FloatTensorType, DoubleTensorType, BooleanTensorType, StringTensorType
 from .common import k2o_logger, get_default_batch_size
 from .funcbook import get_converter
 
@@ -39,6 +39,8 @@ def infer_variable_type(tensor, opset, inbound_node_shape=None):
         return DoubleTensorType(shape=tensor_shape)
     elif tensor_type == tf.bool:
         return BooleanTensorType(shape=tensor_shape)
+    elif tensor_type == tf.string:
+        return StringTensorType(shape=tensor_shape)
     else:
         raise ValueError(
             "Unable to find out a correct type for tensor type = {} of {}".format(tensor_type, tensor.name))
